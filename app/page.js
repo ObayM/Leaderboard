@@ -1,16 +1,44 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { Trophy, Crown, AlertTriangle, Star, Sparkles, Award } from 'lucide-react';
+import Footer from '@/components/footer';
 
 const leaderboardData = [
+  { name: "Yassin Abd Al Aziz", points: 10, notes: "" },
   { name: "Nourhan Ayman Hamdy Yehia", points: 10, notes: "" },
+  { name: "Aser Tamer", points: 10, notes: "" },
+  { name: "Eslam Emam", points: 10, notes: "" },
+  { name: "Yara Nagi", points: 10, notes: "" },
+  { name: "Mohamed El Sayed", points: 10, notes: "" },
+  { name: "Nour Hessien", points: 10, notes: "" },
+  { name: "Yassmin Mohamed", points: 10, notes: "" },
+  { name: "Moaz Mohamed", points: 7, notes: "" },
   { name: "Salwa Shahen", points: 7, notes: "" },
   { name: "Shahd Galal Al Soud", points: 7, notes: "" },
+  { name: "Rawan", points: 7, notes: "" },
   { name: "Ziad Ahmed Mohamed Elkafoury", points: 5, notes: "Excused (Week 2)" },
-  { name: "Yassmein Zazoa Sarwat", points: 2, notes: "" },
+  { name: "Mostafa Ali", points: 5, notes: "1 Warning" },
+  { name: "Omar Abdelhamid", points: 5, notes: "" },
+  { name: "Malak Ali", points: 5, notes: "Warning" },
+  { name: "Hana Shaaban", points: 5, notes: "Warning" },
   { name: "Abdelrahman Ayman", points: 2, notes: "1 Warning" },
+  { name: "Yassmein Zazoa Sarwat", points: 2, notes: "" },
+  { name: "Marwan Mohammed", points: 0, notes: "1 Warning, Excused Week 1" },
   { name: "Hamza Sayed Abdelhafez Mahmoud", points: 0, notes: "1 Warning" },
-  { name: "Adham Ayman Mohamed Elgamil", points: 0, notes: "2 Warnings" }
+  { name: "Mostafa Fekry", points: 0, notes: "Warning, Excused" },
+  { name: "Rawan Zamy", points: 0, notes: "2 Warnings" },
+  { name: "Yossef Ayman", points: 0, notes: "2 Warnings" },
+  { name: "Anas Osama", points: 0, notes: "2 Warnings" },
+  { name: "Shaimaa Mohammed", points: 0, notes: "2 Warnings, Excused Week 1" },
+  { name: "Omar Abdelhamid", points: 0, notes: "2 Warnings, Excused Week 1" },
+  { name: "Adham Ayman Mohamed Elgamil", points: 0, notes: "2 Warnings" },
+  { name: "Abdelrahman Mohamed", points: 0, notes: "2 Warnings" },
+  { name: "Gomana Amr", points: 0, notes: "2 Warnings" },
+  { name: "Hanan Abdelhady", points: 0, notes: "2 Warnings" },
+  { name: "Mohamed Ali", points: 0, notes: "2 Warnings" },
+  { name: "Thomas Samy", points: 0, notes: "2 Warnings" },
+  { name: "Salma Mostafa", points: 0, notes: "2 Warnings" },
+  { name: "Jana Nader", points: 0, notes: "2 Warnings" }
 ];
 
 const ParticleEffect = () => {
@@ -64,6 +92,7 @@ const LeaderboardDisplay = () => {
   };
 
   return (
+    <>
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 p-4 sm:p-8 relative overflow-hidden">
       <ParticleEffect />
       <div className="max-w-4xl mx-auto relative">
@@ -78,7 +107,7 @@ const LeaderboardDisplay = () => {
                 <Sparkles className="w-6 h-6 text-yellow-400 absolute -top-2 -right-2 animate-spin" style={{ animationDuration: '3s' }} />
               </div>
               <h1 className="text-5xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 mb-2">
-                Leaderboard
+                Scholars' Research Leaderboard
               </h1>
               <div className="w-40 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent rounded-full animate-pulse"></div>
             </div>
@@ -181,6 +210,8 @@ const LeaderboardDisplay = () => {
         }
       `}</style>
     </div>
+          <Footer />
+    </>
   );
 };
 
