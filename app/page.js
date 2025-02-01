@@ -118,8 +118,8 @@ const LeaderboardDisplay = () => {
                 <Crown className="w-16 h-16 text-yellow-500 animate-pulse mb-4" />
                 <Sparkles className="w-6 h-6 text-yellow-400 absolute -top-2 -right-2 animate-spin" style={{ animationDuration: '3s' }} />
               </div>
-              <h1 className="text-5xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 mb-2">
-                Scholars&apos; Research Leaderboard
+              <h1 className="text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 mb-2">
+                Scholars&apos; Research Club Quiz Leaderboard
               </h1>
               <div className="w-40 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent rounded-full animate-pulse"></div>
             </div>
