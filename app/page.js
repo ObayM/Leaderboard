@@ -1,44 +1,36 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { Trophy, Crown, AlertTriangle, Star, Sparkles, Award } from 'lucide-react';
+import { Trophy, Crown, Star, Sparkles, Award } from 'lucide-react';
 import Footer from '@/components/footer';
 
 const leaderboardData = [
-  { name: "Yassin Abd Al Aziz", points: 10, notes: "" },
-  { name: "Nourhan Ayman Hamdy Yehia", points: 10, notes: "" },
-  { name: "Aser Tamer", points: 10, notes: "" },
-  { name: "Eslam Emam", points: 10, notes: "" },
-  { name: "Yara Nagi", points: 10, notes: "" },
-  { name: "Mohamed El Sayed", points: 10, notes: "" },
-  { name: "Nour Hessien", points: 10, notes: "" },
-  { name: "Yassmin Mohamed", points: 10, notes: "" },
-  { name: "Moaz Mohamed", points: 7, notes: "" },
-  { name: "Salwa Shahen", points: 7, notes: "" },
-  { name: "Shahd Galal Al Soud", points: 7, notes: "" },
-  { name: "Rawan", points: 7, notes: "" },
-  { name: "Ziad Ahmed Mohamed Elkafoury", points: 5, notes: "Excused (Week 2)" },
-  { name: "Mostafa Ali", points: 5, notes: "1 Warning" },
-  { name: "Omar Abdelhamid", points: 5, notes: "" },
-  { name: "Malak Ali", points: 5, notes: "Warning" },
-  { name: "Hana Shaaban", points: 5, notes: "Warning" },
-  { name: "Abdelrahman Ayman", points: 2, notes: "1 Warning" },
-  { name: "Yassmein Zazoa Sarwat", points: 2, notes: "" },
-  { name: "Marwan Mohammed", points: 0, notes: "1 Warning, Excused Week 1" },
-  { name: "Hamza Sayed Abdelhafez Mahmoud", points: 0, notes: "1 Warning" },
-  { name: "Mostafa Fekry", points: 0, notes: "Warning, Excused" },
-  { name: "Rawan Zamy", points: 0, notes: "2 Warnings" },
-  { name: "Yossef Ayman", points: 0, notes: "2 Warnings" },
-  { name: "Anas Osama", points: 0, notes: "2 Warnings" },
-  { name: "Shaimaa Mohammed", points: 0, notes: "2 Warnings, Excused Week 1" },
-  { name: "Omar Abdelhamid", points: 0, notes: "2 Warnings, Excused Week 1" },
-  { name: "Adham Ayman Mohamed Elgamil", points: 0, notes: "2 Warnings" },
-  { name: "Abdelrahman Mohamed", points: 0, notes: "2 Warnings" },
-  { name: "Gomana Amr", points: 0, notes: "2 Warnings" },
-  { name: "Hanan Abdelhady", points: 0, notes: "2 Warnings" },
-  { name: "Mohamed Ali", points: 0, notes: "2 Warnings" },
-  { name: "Thomas Samy", points: 0, notes: "2 Warnings" },
-  { name: "Salma Mostafa", points: 0, notes: "2 Warnings" },
-  { name: "Jana Nader", points: 0, notes: "2 Warnings" }
+    { "name": "Hannah Shaban", "points": 24 },
+    { "name": "Heba Shafeek Omar", "points": 24 },
+    { "name": "Mohamed El Sayed Abdel Raouf El Sayed", "points": 24 },
+    { "name": "Marwan Ahmed Hassan", "points": 24 },
+    { "name": "Nourhan Ayman Hamdy Yehia", "points": 23 },
+    { "name": "Mohammed Ali", "points": 23 },
+    { "name": "Ahmed Nasr Ahmed", "points": 23 },
+    { "name": "Yassin Ali Gaber Abdelaziz", "points": 22 },
+    { "name": "Eslam Emam Hussien", "points": 22 },
+    { "name": "Omar Abdelhamied Elazab Mohamed", "points": 22 },
+    { "name": "Aser Tamer Maher Mohamed Osman", "points": 22 },
+    { "name": "Lujain Salem", "points": 22 },
+    { "name": "Rawan Zaki", "points": 20 },
+    { "name": "Yassmein Zazoa", "points": 19 },
+    { "name": "Ziad Elkafoury", "points": 19 },
+    { "name": "Thomas Keroles", "points": 18 },
+    { "name": "Yasmin Mohamed Gamal", "points": 18 },
+    { "name": "Shahd Galal", "points": 18 },
+    { "name": "Amr Ehab AbdelAziz Arafat", "points": 17 },
+    { "name": "Mostafa Ahmed Rezk", "points": 17 },
+    { "name": "Yara Nagi Ahmed", "points": 17 },
+    { "name": "Salwa Waleed", "points": 16 },
+    { "name": "Moaaz Mohamed", "points": 16 },
+    { "name": "Nour Hussein", "points": 16 },
+    { "name": "Nancy Shaban Hassan", "points": 15 },
+    { "name": "AbdulRahman Ayman Saleh", "points": 14 },
+    { "name": "Hamsa", "points": 14 }
 ];
 
 const ParticleEffect = () => {
@@ -67,26 +59,46 @@ const LeaderboardDisplay = () => {
     setMounted(true);
   }, []);
 
-  const getGradient = (index) => {
-    const gradients = {
-      0: "bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-500",
-      1: "bg-gradient-to-r from-slate-400 via-gray-300 to-slate-400",
-      2: "bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700"
-    };
-    return gradients[index] || "bg-gradient-to-r from-indigo-600 via-blue-500 to-indigo-600";
+  // Calculate ranks considering ties
+  const calculateRanks = (data) => {
+    let currentRank = 1;
+    let previousPoints = null;
+    let skipPositions = 0;
+
+    return data.map((entry, index) => {
+      if (previousPoints !== entry.points) {
+        currentRank = currentRank + skipPositions;
+        skipPositions = 0;
+      } else {
+        skipPositions++;
+      }
+      previousPoints = entry.points;
+      return { ...entry, rank: currentRank };
+    });
   };
 
-  const getBackground = (index) => {
-    if (index === 0) return "bg-gradient-to-r from-yellow-900/20 to-yellow-900/10";
-    if (index === 1) return "bg-gradient-to-r from-gray-800/20 to-gray-800/10";
-    if (index === 2) return "bg-gradient-to-r from-amber-900/20 to-amber-900/10";
+  const rankedData = calculateRanks(leaderboardData);
+
+  const getGradient = (rank) => {
+    const gradients = {
+      1: "bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-500",
+      2: "bg-gradient-to-r from-slate-400 via-gray-300 to-slate-400",
+      3: "bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700"
+    };
+    return gradients[rank] || "bg-gradient-to-r from-indigo-600 via-blue-500 to-indigo-600";
+  };
+
+  const getBackground = (rank) => {
+    if (rank === 1) return "bg-gradient-to-r from-yellow-900/20 to-yellow-900/10";
+    if (rank === 2) return "bg-gradient-to-r from-gray-800/20 to-gray-800/10";
+    if (rank === 3) return "bg-gradient-to-r from-amber-900/20 to-amber-900/10";
     return "bg-gradient-to-r from-slate-800/20 to-slate-800/10";
   };
 
   const getPointsColor = (points) => {
-    if (points >= 10) return "text-yellow-400";
-    if (points >= 7) return "text-blue-400";
-    if (points >= 5) return "text-green-400";
+    if (points >= 20) return "text-yellow-400";
+    if (points >= 15) return "text-blue-400";
+    if (points >= 10) return "text-green-400";
     if (points > 0) return "text-purple-400";
     return "text-red-400";
   };
@@ -113,10 +125,10 @@ const LeaderboardDisplay = () => {
             </div>
             
             <div className="space-y-4">
-              {leaderboardData.map((entry, index) => (
+              {rankedData.map((entry, index) => (
                 <div
                   key={index}
-                  className={`${getBackground(index)} rounded-2xl p-6 transition-all duration-500 
+                  className={`${getBackground(entry.rank)} rounded-2xl p-6 transition-all duration-500 
                     hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/20 
                     border border-slate-800/50 backdrop-blur-sm
                     ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
@@ -127,11 +139,11 @@ const LeaderboardDisplay = () => {
                   }}
                 >
                   <div className="flex items-center gap-6">
-                    <div className={`${getGradient(index)} w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold shadow-lg relative group`}>
-                      {index === 0 ? (
+                    <div className={`${getGradient(entry.rank)} w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold shadow-lg relative group`}>
+                      {entry.rank === 1 ? (
                         <Crown className="w-8 h-8 animate-pulse" />
                       ) : (
-                        <span className="text-xl">{index + 1}</span>
+                        <span className="text-xl">{entry.rank}</span>
                       )}
                       <div className="absolute inset-0 rounded-xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
@@ -141,18 +153,18 @@ const LeaderboardDisplay = () => {
                         <div>
                           <h3 className="font-semibold text-gray-100 text-xl mb-2 flex items-center gap-2">
                             {entry.name}
-                            {index < 3 && <Award className={`w-5 h-5 ${index === 0 ? 'text-yellow-500' : index === 1 ? 'text-gray-400' : 'text-amber-700'}`} />}
+                            {entry.rank <= 3 && <Award className={`w-5 h-5 ${entry.rank === 1 ? 'text-yellow-500' : entry.rank === 2 ? 'text-gray-400' : 'text-amber-700'}`} />}
                           </h3>
                           <div className="flex items-center gap-3">
                             <div className="flex items-center gap-2">
-                              <Trophy className={`w-5 h-5 ${index === 0 ? 'text-yellow-500' : 'text-blue-400'}`} />
+                              <Trophy className={`w-5 h-5 ${entry.rank === 1 ? 'text-yellow-500' : 'text-blue-400'}`} />
                               <span className={`text-lg font-bold ${getPointsColor(entry.points)} bg-slate-800 px-3 py-1 rounded-lg`}>
                                 {entry.points} points
                               </span>
                             </div>
-                            {index < 3 && (
+                            {entry.rank <= 3 && (
                               <div className="flex ml-2">
-                                {[...Array(3 - index)].map((_, i) => (
+                                {[...Array(4 - entry.rank)].map((_, i) => (
                                   <Star key={i} className="w-4 h-4 text-yellow-500" style={{ 
                                     animation: 'starTwinkle 1.5s ease-in-out infinite',
                                     animationDelay: `${i * 0.5}s`
@@ -162,17 +174,6 @@ const LeaderboardDisplay = () => {
                             )}
                           </div>
                         </div>
-                        
-                        {entry.notes && (
-                          <div className="flex items-center gap-2 text-sm bg-slate-800/50 px-4 py-2 rounded-lg">
-                            {entry.notes.includes("Warning") ? (
-                              <AlertTriangle className="w-5 h-5 text-red-400 animate-pulse" />
-                            ) : null}
-                            <span className={`${entry.notes.includes("Warning") ? "text-red-400" : "text-gray-400"}`}>
-                              {entry.notes}
-                            </span>
-                          </div>
-                        )}
                       </div>
                     </div>
                   </div>
@@ -210,7 +211,7 @@ const LeaderboardDisplay = () => {
         }
       `}</style>
     </div>
-          <Footer />
+    <Footer />
     </>
   );
 };
